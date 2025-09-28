@@ -1,99 +1,49 @@
-# Javelin HTTP Server 🚀
+#!/bin/bash
+# Script d'installation de Javelin en tant que service systemd 🚀
 
-**Javelin** est un serveur HTTP léger écrit en Java, développé par **BRCloud**.  
-Il permet d’héberger des fichiers statiques (HTML, CSS, JS) et propose des fonctionnalités avancées similaires à Apache/Nginx.
+SERVICE_NAME="javelin"
+INSTALL_DIR="/opt/Javelin"
 
----
-
-## ✨ Fonctionnalités
-- 📂 Serveur de fichiers statiques (`www/`)
-- ⚡ Logs Apache-like
-- 📄 Pages d’erreur personnalisées (403, 404, 500)
-- 📑 Directory listing
-- 🔄 Compression Gzip
-- 🔐 HTTPS (avec certificat auto-signé)
-- 🌍 Virtual Hosts (multi-sites)
-- 🛠️ Configuration externe (`server.conf`)
-- 📊 Monitoring JSON via `/status`
-- ⏱️ Exemple d’API REST via `/api/time`
-
----
-
-## 🔧 Prérequis
-
-Avant d’installer Javelin, assurez-vous d’avoir **Java (JDK)** installé.  
-Sur **Debian/Ubuntu**, installez Java 17 (LTS) avec :
-
-```bash
-sudo apt update
-sudo apt install -y openjdk-17-jdk
-```
-
-Vérifiez ensuite la version :
-
-```bash
-java -version
-```
-
-Vous devriez voir quelque chose comme :
-
-```
-openjdk version "17.0.x" ...
-```
-
----
-
-## 🚀 Installation rapide (via GitHub)
-
-Cloner directement le dépôt GitHub :
-
-```bash
-git clone https://github.com/Filox77250/Javelin.git
-cd Javelin
+echo "📦 Compilation de Javelin..."
 javac -encoding UTF-8 Javelin.java
-java Javelin
+if [ $? -ne 0 ]; then
+  echo "❌ Erreur lors de la compilation"
+  exit 1
+fi
 
-```
+echo "📂 Création de l'archive JAR..."
+jar --create --file Javelin.jar --main-class=Javelin Javelin.class
 
-👉 Par défaut, le serveur démarre sur [http://localhost:8080](http://localhost:8080).
+echo "📂 Création du répertoire d'installation : $INSTALL_DIR"
+sudo mkdir -p $INSTALL_DIR
+sudo cp -r Javelin.java Javelin.class Javelin.jar server.conf www README.md $INSTALL_DIR/ 2>/dev/null
 
----
+echo "⚙️ Création du service systemd : /etc/systemd/system/$SERVICE_NAME.service"
+sudo bash -c "cat > /etc/systemd/system/$SERVICE_NAME.service <<EOL
+[Unit]
+Description=Javelin HTTP Server
+After=network.target
 
-## 📦 Télécharger sans git (ZIP auto-généré par GitHub)
+[Service]
+User=root
+WorkingDirectory=$INSTALL_DIR
+ExecStart=/usr/bin/java -jar $INSTALL_DIR/Javelin.jar
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
 
-```bash
-curl -L -o javelin.zip https://github.com/Filox77250/Javelin/archive/refs/heads/main.zip
-unzip javelin.zip
-cd Javelin-main
-javac -encoding UTF-8 Javelin.java
-java Javelin
+[Install]
+WantedBy=multi-user.target
+EOL"
 
-```
+echo "🔄 Rechargement de systemd..."
+sudo systemctl daemon-reload
 
----
+echo "✅ Activation du service Javelin au démarrage"
+sudo systemctl enable $SERVICE_NAME
 
-## 📂 Structure du projet
-```
-Javelin/
-├── Javelin.java        # Code source du serveur
-├── server.conf         # Configuration (port, documentRoot, etc.)
-├── www/                # Contenu statique
-│   ├── index.html      # Page d’accueil (It works! style Apache2)
-│   └── errors/         # Pages d’erreurs (403, 404, 500)
-```
+echo "🚀 Démarrage du service Javelin"
+sudo systemctl start $SERVICE_NAME
 
----
-
-## 🔧 Exemple d’utilisation
-- Placer vos fichiers dans `www/`
-- Démarrer le serveur :  
-  ```bash
-  java Javelin
-  ```
-- Ouvrir [http://localhost:8080](http://localhost:8080)
-
----
-
-## 👨‍💻 Auteur
-Développé par **Filox77250** (BRCloud)  
-👉 [https://github.com/Filox77250/Javelin](https://github.com/Filox77250/Javelin)
+echo "📊 Vérification du statut :"
+sudo systemctl status $SERVICE_NAME --no-pager -l
