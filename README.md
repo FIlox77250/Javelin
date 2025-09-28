@@ -19,6 +19,30 @@ Il permet d’héberger des fichiers statiques (HTML, CSS, JS) et propose des fo
 
 ---
 
+## 🔧 Prérequis
+
+Avant d’installer Javelin, assurez-vous d’avoir **Java (JDK)** installé.  
+Sur **Debian/Ubuntu**, installez Java 17 (LTS) avec :
+
+```bash
+sudo apt update
+sudo apt install -y openjdk-17-jdk
+```
+
+Vérifiez ensuite la version :
+
+```bash
+java -version
+```
+
+Vous devriez voir quelque chose comme :
+
+```
+openjdk version "17.0.x" ...
+```
+
+---
+
 ## 🚀 Installation rapide (via GitHub)
 
 Cloner directement le dépôt GitHub :
