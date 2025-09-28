@@ -45,7 +45,14 @@ openjdk version "17.0.x" ...
 
 ## 🚀 Installation et exécution via script
 
-Le dépôt contient un script `build.sh` qui **compile, installe et configure Javelin en service systemd**.  
+Cloner le dépôt GitHub :  
+
+```bash
+git clone https://github.com/Filox77250/Javelin.git
+cd Javelin
+```
+
+Puis exécuter le script `build.sh` qui **compile, installe et configure Javelin en service systemd**.  
 Cela permet à Javelin de tourner en arrière-plan et de se relancer automatiquement au démarrage.
 
 ### 1. Rendre le script exécutable
