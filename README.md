@@ -1,4 +1,4 @@
-# Javelin HTTP Server 🚀
+<img width="1166" height="724" alt="image" src="https://github.com/user-attachments/assets/449347ae-2fe5-4a13-9634-dc0b4b1a86c4" /># Javelin HTTP Server 🚀
 
 **Javelin** est un serveur HTTP léger écrit en Java, développé par **BRCloud**.  
 Il permet d’héberger des fichiers statiques (HTML, CSS, JS) et propose des fonctionnalités avancées similaires à Apache/Nginx.
@@ -26,7 +26,7 @@ Sur **Debian/Ubuntu**, installez Java 17 (LTS) avec :
 
 ```bash
 sudo apt update
-sudo apt install -y openjdk-17-jdk
+sudo apt install -y openjdk-21-jdk
 ```
 
 Vérifiez ensuite la version :
@@ -38,7 +38,7 @@ java -version
 Vous devriez voir quelque chose comme :
 
 ```
-openjdk version "17.0.x" ...
+openjdk version "21.0.x" ...
 ```
 
 ---
