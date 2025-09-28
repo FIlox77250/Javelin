@@ -1,4 +1,4 @@
-<img width="1166" height="724" alt="image" src="https://github.com/user-attachments/assets/449347ae-2fe5-4a13-9634-dc0b4b1a86c4" /># Javelin HTTP Server 🚀
+# Javelin HTTP Server 🚀
 
 **Javelin** est un serveur HTTP léger écrit en Java, développé par **BRCloud**.  
 Il permet d’héberger des fichiers statiques (HTML, CSS, JS) et propose des fonctionnalités avancées similaires à Apache/Nginx.
