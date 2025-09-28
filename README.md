@@ -43,19 +43,27 @@ openjdk version "17.0.x" ...
 
 ---
 
-## 🚀 Installation rapide (via GitHub)
+## 🚀 Installation et exécution via script
 
-Cloner directement le dépôt GitHub :
+Le dépôt contient un script `build.sh` qui **compile, installe et configure Javelin en service systemd**.  
+Cela permet à Javelin de tourner en arrière-plan et de se relancer automatiquement au démarrage.
 
+### 1. Rendre le script exécutable
 ```bash
-git clone https://github.com/Filox77250/Javelin.git
-cd Javelin
-javac -encoding UTF-8 Javelin.java
-java Javelin
-
+chmod +x build.sh
 ```
 
-👉 Par défaut, le serveur démarre sur [http://localhost:8080](http://localhost:8080).
+### 2. Lancer l’installation
+```bash
+./build.sh
+```
+
+### 3. Vérifier le statut du service
+```bash
+systemctl status javelin
+```
+
+👉 Après ça, ton serveur est disponible sur [http://localhost:8080](http://localhost:8080).
 
 ---
 
@@ -65,9 +73,8 @@ java Javelin
 curl -L -o javelin.zip https://github.com/Filox77250/Javelin/archive/refs/heads/main.zip
 unzip javelin.zip
 cd Javelin-main
-javac -encoding UTF-8 Javelin.java
-java Javelin
-
+chmod +x build.sh
+./build.sh
 ```
 
 ---
@@ -80,17 +87,21 @@ Javelin/
 ├── www/                # Contenu statique
 │   ├── index.html      # Page d’accueil (It works! style Apache2)
 │   └── errors/         # Pages d’erreurs (403, 404, 500)
+├── build.sh            # Script d’installation systemd
 ```
 
 ---
 
-## 🔧 Exemple d’utilisation
-- Placer vos fichiers dans `www/`
-- Démarrer le serveur :  
-  ```bash
-  java Javelin
-  ```
-- Ouvrir [http://localhost:8080](http://localhost:8080)
+## 🔧 Gestion du service
+
+Une fois installé, vous pouvez gérer Javelin avec :
+
+```bash
+sudo systemctl start javelin     # Démarrer
+sudo systemctl stop javelin      # Arrêter
+sudo systemctl restart javelin   # Redémarrer
+journalctl -u javelin -f         # Logs en temps réel
+```
 
 ---
 
