@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Javelin HTTP Server</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ccc;
+      margin: 0;
+      padding: 20px;
+    }
+    .content {
+      background: #fff;
+      border: 1px solid #999;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: -20px -20px 20px -20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.6em;
+    }
+    header span {
+      font-size: 0.9em;
+      color: #f0f0f0;
+      font-style: italic;
+    }
+    .ok {
+      background: #e74c3c;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    h2 {
+      background: #7f8c8d;
+      color: white;
+      padding: 8px;
+      font-size: 1.2em;
+      margin-top: 25px;
+    }
+    pre {
+      background: #f8f9fa;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    a {
+      color: #2c3e50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+<div class="content">
+  <header>
+    <h1>Javelin HTTP Server</h1>
+    <span>by BRCloud</span>
+  </header>
+
+  <div class="ok">It works!</div>
+
+  <p>
+    Ceci est la page par défaut de <strong>Javelin</strong>.
+    Si vous voyez cette page, cela signifie que votre serveur fonctionne correctement.
+  </p>
+
+  <h2>Configuration</h2>
+  <p>Voici les paramètres par défaut de votre serveur Javelin :</p>
+  <pre>
+/etc/javelin/
+|-- javelin.conf
+|   `-- ports.conf
+|-- mods-enabled/
+|   |-- *.load
+|   `-- *.conf
+|-- conf-enabled/
+|   `-- *.conf
+|-- sites-enabled/
+|   `-- *.conf
+    </pre>
+
+  <h2>Liens utiles</h2>
+  <ul>
+    <li><a href="/status">/status</a> → Monitoring JSON</li>
+    <li><a href="/api/time">/api/time</a> → Heure serveur</li>
+    <li><a href="/">/</a> → Retour à l’accueil</li>
+  </ul>
+
+  <footer>
+    <p>Javelin HTTP Server © 2025 — by BRCloud</p>
+  </footer>
+</div>
+</body>
+</html>
