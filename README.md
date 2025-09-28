@@ -50,8 +50,9 @@ Cloner directement le dépôt GitHub :
 ```bash
 git clone https://github.com/Filox77250/Javelin.git
 cd Javelin
-javac Javelin.java
+javac -encoding UTF-8 Javelin.java
 java Javelin
+
 ```
 
 👉 Par défaut, le serveur démarre sur [http://localhost:8080](http://localhost:8080).
@@ -64,8 +65,9 @@ java Javelin
 curl -L -o javelin.zip https://github.com/Filox77250/Javelin/archive/refs/heads/main.zip
 unzip javelin.zip
 cd Javelin-main
-javac Javelin.java
+javac -encoding UTF-8 Javelin.java
 java Javelin
+
 ```
 
 ---
