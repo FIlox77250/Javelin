@@ -96,7 +96,8 @@ public class Javelin {
             if (index.exists()) {
                 file = index;
             } else {
-                sendDirectoryListing(ex, file, path);
+                // plus de directory listing généré en dur → 403
+                serveError(ex, 403, "Forbidden");
                 return;
             }
         }
@@ -123,35 +124,19 @@ public class Javelin {
         }
     }
 
-    private static void sendDirectoryListing(HttpExchange ex, File dir, String path) throws IOException {
-        StringBuilder html = new StringBuilder("<html><body><h1>Index of " + path + "</h1><ul>");
-        for (File f : Objects.requireNonNull(dir.listFiles())) {
-            String name = f.getName() + (f.isDirectory() ? "/" : "");
-            html.append("<li><a href=\"")
-                    .append(path).append("/").append(name)
-                    .append("\">").append(name).append("</a></li>");
-        }
-        html.append("</ul></body></html>");
-        byte[] data = html.toString().getBytes();
-        ex.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
-        addDefaultHeaders(ex);
-        ex.sendResponseHeaders(200, data.length);
-        try (OutputStream os = ex.getResponseBody()) { os.write(data); }
-    }
-
     private static void serveError(HttpExchange ex, int code, String message) throws IOException {
         String root = getDocumentRoot(ex.getRequestHeaders().getFirst("Host"));
         File custom = new File(root, "errors/" + code + ".html");
-        byte[] data;
         if (custom.exists()) {
-            data = Files.readAllBytes(custom.toPath());
+            byte[] data = Files.readAllBytes(custom.toPath());
+            ex.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
+            addDefaultHeaders(ex);
+            ex.sendResponseHeaders(code, data.length);
+            try (OutputStream os = ex.getResponseBody()) { os.write(data); }
         } else {
-            data = ("<h1>" + code + " " + message + "</h1>").getBytes();
+            // aucun fallback → juste code HTTP
+            ex.sendResponseHeaders(code, -1);
         }
-        ex.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
-        addDefaultHeaders(ex);
-        ex.sendResponseHeaders(code, data.length);
-        try (OutputStream os = ex.getResponseBody()) { os.write(data); }
     }
 
     private static void handleStatus(HttpExchange ex) throws IOException {
